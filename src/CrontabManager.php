@@ -3,6 +3,7 @@
 namespace Dbb\CrontabManager;
 
 use Dbb\CrontabManager\Entity\CronJob;
+use Dbb\CrontabManager\Exception\CronJobDuplicateIdException;
 
 class CrontabManager
 {
@@ -24,9 +25,12 @@ class CrontabManager
         }
     }
 
-    public function add(string $jobId, CronJob $cronJob)
+    public function add(CronJob $cronJob)
     {
-        $this->jobs[$jobId] = $cronJob;
+        if (array_key_exists($cronJob->getId(), $this->jobs)) {
+            throw new CronJobDuplicateIdException(sprintf('Cron job with Id "%s" already exists.', $cronJob->getId()));
+        }
+        $this->jobs[$cronJob->getId()] = $cronJob;
     }
 
     public function remove(string $jobId): bool
@@ -53,16 +57,17 @@ class CrontabManager
     protected function getCurrentUsername(): string
     {
         if (!extension_loaded('posix')) {
-            throw new \Exception('This application requires the Posix extension to be installed and running.');
+            throw new \Exception('This application requires the PHP Posix extension to be installed and activated.');
         }
 
         $userInfo = posix_getpwuid(posix_geteuid());
         return $userInfo['name'];
     }
 
-    protected function parseCronjobFile()
+    protected function parseCronjobFile(): array
     {
         // TODO: implement
+        return [];
     }
 
     protected function getCurrentCrontab(): array

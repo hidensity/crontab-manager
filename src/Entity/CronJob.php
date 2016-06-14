@@ -11,6 +11,11 @@ use Dbb\CrontabManager\Execution\CronExecutionWeekday;
 class CronJob
 {
     /**
+     * @var string
+     */
+    protected $id;
+    
+    /**
      * @var CronExecutionMinute
      */
     protected $minutes;
@@ -50,13 +55,25 @@ class CronJob
      */
     protected $parameters = [];
 
-    public function __construct()
+    public function __construct(string $id)
     {
+        $this->id = $id;
         $this->minutes = new CronExecutionMinute();
         $this->hours = new CronExecutionHour();
         $this->days = new CronExecutionDay();
         $this->months = new CronExecutionMonth();
         $this->daysOfWeek = new CronExecutionWeekday();
+    }
+
+    public function __toString(): string
+    {
+        return trim(sprintf(
+            '%s %s %s\t# %s',
+            $this->getExecutionDefinition(),
+            $this->getCommand(),
+            $this->getParamString(),
+            $this->getId()
+        ));
     }
 
     public function minutes(): CronExecutionMinute
@@ -102,6 +119,11 @@ class CronJob
     public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function getExecutionDefinition(): string

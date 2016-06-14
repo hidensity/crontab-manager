@@ -2,6 +2,8 @@
 
 namespace Dbb\CrontabManager\Execution;
 
+use Dbb\CrontabManager\Exception\CronJobExecutionException;
+
 class CronExecution
 {
     /**
@@ -55,17 +57,17 @@ class CronExecution
         if (!is_numeric($execDefinition) &&
             !preg_match('/^(\*)/', $execDefinition) &&
             !preg_match('/^(\d+-\d+)?$/', $execDefinition)) {
-            throw new \InvalidArgumentException('Provided execution definition does not match any valid pattern.');
+            throw new CronJobExecutionException('Provided execution definition does not match any valid pattern.');
         }
 
         if (is_numeric($execDefinition) && $execDefinition > $this->maxStepValue) {
-            throw new \InvalidArgumentException('Execution interval exceeds settings maximum.');
+            throw new CronJobExecutionException('Execution interval exceeds settings maximum.');
         }
 
         if (preg_match('/^(\d+-\d+)?$/', $execDefinition, $matches)) {
             $matches = explode('-', $matches[0]);
             if ($matches[0] > $matches[1]) {
-                throw new \InvalidArgumentException('Invalid execution time span specified.');
+                throw new CronJobExecutionException('Invalid execution time span specified.');
             }
         }
 
@@ -75,10 +77,10 @@ class CronExecution
     protected function parseStepDefinition(string $step): bool
     {
         if (!is_numeric($step)) {
-            throw new \InvalidArgumentException('Step definition must contain a numeric value.');
+            throw new CronJobExecutionException('Step definition must contain a numeric value.');
         }
         if ($step < 0 || $step > $this->maxStepValue) {
-            throw new \InvalidArgumentException('Specified step value is exceeds the valid values for this parameter');
+            throw new CronJobExecutionException('Specified step value is exceeds the valid values for this parameter');
         }
 
         return true;

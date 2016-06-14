@@ -21,7 +21,7 @@ class TestCrontabManager
     {
         $this->cronTabManager = new CrontabManager();
 
-        $this->cronJob = new CronJob();
+        $this->cronJob = new CronJob(uniqid('cjId:', true));
         $this->cronJob->minutes()->step('45');
 
         $this->cronTabManager->add('sample', $this->cronJob);
