@@ -54,6 +54,10 @@ class CronExecution
 
     protected function parseExecDefinition(string $execDefinition): bool
     {
+        if (empty($execDefinition)) {
+            throw new CronJobExecutionException('Execution definition must not be empty');
+        }
+        
         if (!is_numeric($execDefinition) &&
             !preg_match('/^(\*)/', $execDefinition) &&
             !preg_match('/^(\d+-\d+)?$/', $execDefinition)) {

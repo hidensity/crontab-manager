@@ -14,5 +14,8 @@
       "Dbb\\": "app",
       "Dbb\\CrontabManager\\": "src"
     }
+  },
+  "require-dev": {
+    "phpspec/phpspec": "~2.0"
   }
 }

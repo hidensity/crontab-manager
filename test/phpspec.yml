@@ -1,0 +1,11 @@
+formatter.name: pretty
+bootstrap: phpspec-bootstrap.php
+
+suites:
+  app:
+    namespace: Dbb\CrontabManager
+    psr4_prefix: Dbb\CrontabManager
+    spec_prefix: spec\
+    src_path: ../src
+    spec_path: ../test
+
