@@ -1,12 +1,12 @@
 <?php
 
-namespace Dbb\CrontabManager;
+namespace Dbb\CrontabManager\Entity;
 
-use Dbb\CrontabManager\Entity\CronExecutionDay;
-use Dbb\CrontabManager\Entity\CronExecutionHour;
-use Dbb\CrontabManager\Entity\CronExecutionMinute;
-use Dbb\CrontabManager\Entity\CronExecutionMonth;
-use Dbb\CrontabManager\Entity\CronExecutionWeekday;
+use Dbb\CrontabManager\Execution\CronExecutionDay;
+use Dbb\CrontabManager\Execution\CronExecutionHour;
+use Dbb\CrontabManager\Execution\CronExecutionMinute;
+use Dbb\CrontabManager\Execution\CronExecutionMonth;
+use Dbb\CrontabManager\Execution\CronExecutionWeekday;
 
 class CronJob
 {

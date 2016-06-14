@@ -2,6 +2,8 @@
 
 namespace Dbb\CrontabManager;
 
+use Dbb\CrontabManager\Entity\CronJob;
+
 class CrontabManager
 {
     /**

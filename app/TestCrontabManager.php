@@ -2,7 +2,7 @@
 
 namespace Dbb;
 
-use Dbb\CrontabManager\CronJob;
+use Dbb\CrontabManager\Entity\CronJob;
 use Dbb\CrontabManager\CrontabManager;
 
 class TestCrontabManager

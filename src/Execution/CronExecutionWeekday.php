@@ -1,6 +1,6 @@
 <?php
 
-namespace Dbb\CrontabManager\Entity;
+namespace Dbb\CrontabManager\Execution;
 
 class CronExecutionWeekday extends CronExecution
 {
