@@ -59,7 +59,7 @@ class CronExecution
         }
         
         if (!is_numeric($execDefinition) &&
-            !preg_match('/^(\*)/', $execDefinition) &&
+            !preg_match('/^(\*)$/', $execDefinition) &&
             !preg_match('/^(\d+-\d+)?$/', $execDefinition)) {
             throw new CronJobExecutionException('Provided execution definition does not match any valid pattern.');
         }

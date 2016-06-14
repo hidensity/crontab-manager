@@ -24,6 +24,11 @@ class CronExecutionSpec extends ObjectBehavior
         $this->shouldHaveType('Dbb\CrontabManager\Execution\CronExecution');
     }
 
+    function it_should_throw_an_exception_when_passing_a_double_asterisk_as_execution_rule()
+    {
+        $this->shouldThrow(get_class(new CronJobExecutionException()))->duringAdd('**');
+    }
+
     function it_should_throw_an_exception_when_specifying_an_empty_string_for_execution()
     {
         $this->shouldThrow(get_class(new CronJobExecutionException()))->duringAdd('');
@@ -32,6 +37,11 @@ class CronExecutionSpec extends ObjectBehavior
     function it_should_throw_an_exception_when_specifying_a_non_numeric_value_for_execution()
     {
         $this->shouldThrow(get_class(new CronJobExecutionException()))->duringAdd('foo');
+    }
+
+    function it_should_throw_an_exception_when_the_basic_execution_exceeds_the_maximum()
+    {
+        $this->shouldThrow(get_class(new CronJobExecutionException()))->duringAdd(self::MAXIMUM + 1);
     }
 
     function it_should_throw_an_exception_when_specifying_a_value_with_more_than_one_dash_for_execution()
@@ -54,9 +64,19 @@ class CronExecutionSpec extends ObjectBehavior
         $this->__toString()->shouldBe('*');
     }
 
-    function it_should_return_an_asterisk_slash_5_when_specifying_an_execution_rule_with_a_5er_step()
+    function it_should_return_an_asterisk_when_specifying_an_asterisk_as_execution_rule()
+    {
+        $this->add('*')->__toString()->shouldBe('*');
+    }
+
+    function it_should_return_an_asterisk_slash_5_when_specifying_an_asterisk_execution_rule_with_a_5_step()
     {
         $this->add('*')->step('5')->__toString()->shouldBe('*/5');
+    }
+
+    function it_should_return_an_asterisk_slash_3_when_specifying_only_a_3_step()
+    {
+        $this->step('3')->__toString()->shouldBe('*/3');
     }
 
     function it_should_throw_an_exception_when_the_execution_step_exceeds_the_maximum_defined_one()
